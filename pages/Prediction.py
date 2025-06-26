@@ -9,7 +9,7 @@ import time
 
 import sys
 import os
-sys.path.append(os.path.abspath("app"))
+#sys.path.append(os.path.abspath("app"))
 
 from custom_preprocessor import CustomPreprocessor
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
