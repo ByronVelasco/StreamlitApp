@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
+import time
 
 import sys
 import os
@@ -61,7 +62,10 @@ def cargar_modelo(path):
     return joblib.load(path)
 
 modelo = cargar_modelo(modelo_path)
-st.sidebar.success(f"Model loaded successfully: {modelo_seleccionado}")
+modelo_tamano_bytes = os.path.getsize(modelo_path)
+modelo_tamano_kb = modelo_tamano_bytes / 1024
+modelo_tamano_str = f"{modelo_tamano_kb:.2f} KB" if modelo_tamano_kb < 1024 else f"{modelo_tamano_kb/1024:.2f} MB"
+st.sidebar.success(f"Model loaded successfully: {modelo_seleccionado}\n\nModel size: {modelo_tamano_str}")
 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
@@ -209,25 +213,28 @@ else:
                 opciones = sorted(df[col].dropna().unique().tolist())
                 user_input[col] = st.selectbox(f"{col}", opciones)
 
-
 if st.button("Predict Churn"):
-    # Complete the input with expected columns
+    # Check if user input is empty
     columnas_esperadas = preprocessor.num_cols + preprocessor.cat_cols
     entrada_completa = {col: user_input.get(col, None) for col in columnas_esperadas}
     df_nueva_obs = pd.DataFrame([entrada_completa])
 
-    # Transform with preprocessor
+    # Check if all required columns are present
     if modelo_reducido:
         top_features = joblib.load("models/top_features.pkl")
         X_transformada = preprocessor.transform(df_nueva_obs)
         X_transformada = X_transformada[top_features]
-        
     else:
         X_transformada = preprocessor.transform(df_nueva_obs)
 
-    # Make prediction
+    # --- Make prediction ---
+    start = time.time()
     pred_clase = modelo.predict(X_transformada)[0]
     pred_prob = modelo.predict_proba(X_transformada)[0][1]
+    end = time.time()
+    tiempo_pred = end - start
 
+    # --- Display results ---
+    st.info(f"Churn probability: {pred_prob:.2%}")
     st.success(f"Prediction: {'Churn' if pred_clase == 1 else 'No Churn'}")
-    st.info(f"Churn Probability: {pred_prob:.2%}")
+    st.caption(f"Execution time: {tiempo_pred:.4f} seconds")
