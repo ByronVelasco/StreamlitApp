@@ -73,6 +73,7 @@ st.sidebar.success(f"Model loaded successfully: {modelo_seleccionado}\n\nModel s
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 st.markdown(f"### Model Metrics and Confusion Matrix")
+st.markdown("Visualize the evaluation metrics for the selected model, along with its confusion matrix based on test data to validate prediction performance.")
 
 # --- Transform data ---
 if modelo_reducido:
@@ -125,6 +126,7 @@ with col2:
     st.pyplot(fig2)
 
 st.markdown("### Feature Importance from Random Forest")
+st.markdown("Visualize the most important features used to train the model. This insight can guide feature reduction when collecting new data.")
 
 # --- Load Random Forest ---
 modelo_rf = joblib.load("models/random_forest_full.pkl")
@@ -166,7 +168,8 @@ fig.tight_layout()
 st.pyplot(fig)
 
 st.markdown("""
-#### Top Features:
+#### Top Features Description
+The following features are considered the most important for predicting customer churn based on the Random Forest model:
 
 1. **TotalCharges:** Represents the total amount billed to the customer since they joined the service. It is a strong indicator of customer longevity and value.  
 2. **tenure:** Number of months the customer has been with the company. Customers with shorter tenure tend to have a higher probability of churning, as shown in the EDA.  
@@ -176,6 +179,7 @@ st.markdown("""
 """)
 
 st.subheader("New Observation Input")
+st.markdown("Enter information about a new customer to predict whether they are likely to churn. The model will return the churn probability, predicted class, and the time it took to generate the prediction.")
 
 user_input = {}
 
