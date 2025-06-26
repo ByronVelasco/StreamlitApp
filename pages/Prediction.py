@@ -13,6 +13,7 @@ import os
 
 from custom_preprocessor import CustomPreprocessor
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 st.title("Churn Prediction App")
 
@@ -70,8 +71,6 @@ modelo_tamano_kb = modelo_tamano_bytes / 1024
 modelo_tamano_str = f"{modelo_tamano_kb:.2f} KB" if modelo_tamano_kb < 1024 else f"{modelo_tamano_kb/1024:.2f} MB"
 st.sidebar.success(f"Model loaded successfully: {modelo_seleccionado}\n\nModel size: {modelo_tamano_str}")
 
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-
 st.markdown(f"### Model Metrics and Confusion Matrix")
 st.markdown("Visualize the evaluation metrics for the selected model, along with its confusion matrix based on test data to validate prediction performance.")
 
@@ -119,7 +118,7 @@ with col1:
 with col2:
     fig2, ax2 = plt.subplots(figsize=(4, 3))
     cm = confusion_matrix(y_test, y_pred)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["No Churn", "Churn"])
     disp.plot(ax=ax2, colorbar=False)
     ax2.set_title("Confusion Matrix", fontsize=11)
     fig2.tight_layout()
