@@ -36,7 +36,6 @@ X_test, y_test = cargar_test_set()
 # --- Load preprocessor ---
 @st.cache_resource
 def cargar_preprocesador():
-    df = pd.read_csv("data/telco_churn.csv")
     X = df.drop(columns=["Churn"])
     preprocessor = CustomPreprocessor()
     preprocessor.fit(X)
@@ -214,7 +213,7 @@ else:
         cols = st.columns(3)
         for j, col in enumerate(cat_cols[i:i+3]):
             with cols[j]:
-                opciones = sorted(df[col].dropna().unique().tolist())
+                opciones = sorted(df[col].unique().tolist())
                 user_input[col] = st.selectbox(f"{col}", opciones)
 
 if st.button("Predict Churn"):
