@@ -38,8 +38,8 @@ project/
 ### 1. Clone this repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/ByronVelasco/StreamlitApp.git
+cd StreamlitApp
 ```
 
 ### 2. Create and activate a virtual environment (optional but recommended)
