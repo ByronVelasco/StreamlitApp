@@ -55,10 +55,14 @@ df = cargar_dataset()
 
 # --- Show preview ---
 st.markdown("### Dataset Preview")
+st.markdown("Explore how the Telco dataset is structured and organized for this churn analysis study.")
+
 st.dataframe(df.head(), use_container_width=True)
 
 # --- Descriptive statistics by variable ---
 st.markdown("### Descriptive statistics by variable")
+st.markdown("Select any variable to view its descriptive statistics, including mean, standard deviation, minimum, maximum, and more.")
+
 
 columna_seleccionada = st.selectbox("Select a column", df.columns)
 
@@ -74,6 +78,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 st.markdown("### Distribution of the selected column by `Churn`")
+st.markdown("Choose a feature to visualize its distribution segmented by the churn label.")
 
 # Do not include the target variable in the selection
 columnas_disponibles = [col for col in df.columns if col != "Churn"]
@@ -108,8 +113,9 @@ st.pyplot(fig)
 
 # --- Distribution of the target variable: Churn ---
 st.markdown("### Distribution of the target variable: `Churn`")
+st.markdown("View how customers are distributed based on whether they churned or not.")
 
-churn_counts = df["Churn"].value_counts(normalize=True).rename("Proportion").to_frame()
+churn_counts = df["Churn"].value_counts(normalize=True).rename("Percentage").to_frame()
 churn_counts.index.name = "Churn"
 
 # Center the table using columns
