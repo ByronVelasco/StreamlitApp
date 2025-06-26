@@ -36,7 +36,11 @@ X_test, y_test = cargar_test_set()
 # --- Load preprocessor ---
 @st.cache_resource
 def cargar_preprocesador():
-    return joblib.load("models/preprocessor.pkl")
+    df = pd.read_csv("data/telco_churn.csv")
+    X = df.drop(columns=["Churn"])
+    preprocessor = CustomPreprocessor()
+    preprocessor.fit(X)
+    return preprocessor
 
 preprocessor = cargar_preprocesador()
 
