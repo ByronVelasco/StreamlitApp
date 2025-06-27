@@ -242,9 +242,13 @@ if st.button("Predict Churn"):
 
     # --- Display results ---
     st.info(f"Churn probability: {pred_prob:.2%}")
-    st.success(f"Prediction: {'Churn' if pred_clase == 1 else 'No Churn'}")
-    st.caption(f"Execution time: {tiempo_pred:.4f} seconds")
 
-    # Barra de progreso visual (0-100)
-    progress_value = int(pred_prob * 100)
-    st.progress(progress_value)
+    if pred_clase == 1:
+        st.error("Prediction: Churn")
+    else:
+        if pred_prob < 0.35:
+            st.success("Prediction: No Churn")
+        else:
+            st.warning("Prediction: No Churn")
+
+    st.caption(f"Execution time: {tiempo_pred:.4f} seconds")
