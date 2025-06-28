@@ -24,7 +24,7 @@ project/
 │   └── Prediction.py             # Prediction interface
 │
 ├── custom_preprocessor.py        # Contains the custom preprocessor
-├── EDA.py                        # Main Exploratory Data Analysis interface
+├── main.py                       # Main Exploratory Data Analysis interface
 ```
 
 ---
@@ -38,15 +38,7 @@ git clone https://github.com/ByronVelasco/StreamlitApp.git
 cd StreamlitApp
 ```
 
-### 2. Create and activate a virtual environment (optional but recommended)
-
-```bash
-python -m venv venv
-source venv/bin/activate        # Linux / macOS
-venv\Scripts\activate         # Windows
-```
-
-### 3. Install required packages
+### 2. Install required packages
 
 ```bash
 pip install -r requirements.txt
@@ -54,19 +46,19 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Run the app
+### 3. Run the app
 
-Make sure you're in the project root directory (same level as `EDA.py`):
+Make sure you're in the project root directory (same level as `main.py`):
 
 ```bash
-streamlit run EDA.py
+streamlit run main.py
 ```
 
 ---
 
 ## Available Pages
 
-- **EDA**: Explore the dataset with summary statistics, distributions, and churn proportions.
+- **main**: Explore the dataset with summary statistics, distributions, and churn proportions (EDA).
 - **Prediction**: Choose a model and make predictions using new inputs or evaluate it on test data.
 
 You can switch between pages using the sidebar.
